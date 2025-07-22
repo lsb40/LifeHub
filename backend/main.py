@@ -9,7 +9,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
-        "hhttps://life-hub-six.vercel.app/"
+        "https://life-hub-six.vercel.app/"
     ],
     allow_methods=["*"],
     allow_headers=["*"],
