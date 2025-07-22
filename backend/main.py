@@ -1,19 +1,21 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import requests
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
 
 app = FastAPI()
 
 # Allow CORS for frontend localhost:3000
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "https://life-hub-six.vercel.app/"
-    ],
+    allow_origins=["http://localhost:3000"],  # Add your frontend local URL here
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 
 # In-memory data storage (replace with DB for production)
@@ -22,45 +24,42 @@ users_data = {
     "steps": []       # List of {date, steps}
 }
 
-SPOONACULAR_API_KEY = "80fdbb19cd5b443e96a72188732b1ad7"  # Replace with your key
+USDA_API_KEY = os.getenv("USDA_API_KEY")
 
 @app.get("/")
 def root():
     return {"message": "LifeHub Backend API is running"}
 
+USDA_API_KEY = os.getenv("USDA_API_KEY")
+
+@app.get("/search_food")
 @app.get("/search_food")
 def search_food(query: str):
-    # Step 1: Search ingredients by name
-    search_url = f"https://api.spoonacular.com/food/ingredients/search?query={query}&number=5&apiKey={SPOONACULAR_API_KEY}"
-    search_response = requests.get(search_url)
-    if search_response.status_code != 200:
-        raise HTTPException(status_code=500, detail="Failed to fetch from Spoonacular")
+    try:
+        url = "https://api.nal.usda.gov/fdc/v1/foods/search"
+        params = {
+            "query": query,
+            "api_key": USDA_API_KEY
+        }
+        response = requests.get(url, params=params)
+        data = response.json()
 
-    search_data = search_response.json()
-    results = []
-
-    # Step 2: For each ingredient, get nutrition info (calories)
-    for item in search_data.get("results", []):
-        ingredient_id = item.get("id")
-        name = item.get("name")
-
-        info_url = f"https://api.spoonacular.com/food/ingredients/{ingredient_id}/information?amount=100&unit=gram&apiKey={SPOONACULAR_API_KEY}"
-        info_response = requests.get(info_url)
-        if info_response.status_code != 200:
-            calories = None
+        if "foods" in data:
+            results = []
+            for food in data["foods"][:5]:
+                nutrients = {n["nutrientName"]: n["value"] for n in food.get("foodNutrients", [])}
+                results.append({
+                    "name": food.get("description", "Unnamed Food"),
+                    "calories": nutrients.get("Energy", 0),
+                    "protein": nutrients.get("Protein", 0),
+                    "fat": nutrients.get("Total lipid (fat)", 0),
+                    "carbs": nutrients.get("Carbohydrate, by difference", 0),
+                })
+            return {"foods": results}
         else:
-            info_data = info_response.json()
-            calories = None
-            # Extract calories from nutrition
-            nutrients = info_data.get("nutrition", {}).get("nutrients", [])
-            for nutrient in nutrients:
-                if nutrient.get("name") == "Calories":
-                    calories = nutrient.get("amount")
-                    break
-
-        results.append({"name": name, "calories": calories if calories is not None else "N/A"})
-
-    return {"foods": results}
+            return {"foods": [], "error": "No foods found."}
+    except Exception as e:
+        return {"error": str(e)}
 
 @app.post("/log_diet")
 def log_diet(date: str, food_name: str, calories: float):
