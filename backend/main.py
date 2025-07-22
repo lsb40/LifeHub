@@ -8,25 +8,13 @@ load_dotenv()
 
 app = FastAPI()
 
-# Allow CORS for frontend localhost:3000
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["http://localhost:3000"],  # Add your frontend local URL here
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
-
+#Allow CORS for frontend localhost:3000
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",  # for local frontend testing
-        "https://life-hub-six.vercel.app"  # live frontend URL
-    ],
+    allow_origins=["http://localhost:3000"],  # Add your frontend local URL here
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
 
 
 # In-memory data storage (replace with DB for production)
