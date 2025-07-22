@@ -7,10 +7,14 @@ app = FastAPI()
 # Allow CORS for frontend localhost:3000
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=[
+        "http://localhost:3000",
+        "hhttps://life-hub-six.vercel.app/"
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # In-memory data storage (replace with DB for production)
 users_data = {
