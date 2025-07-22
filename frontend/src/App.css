@@ -1,0 +1,189 @@
+/* App.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #e6f0fa; /* very light blue */
+  color: #2e3a59; /* dark blue text */
+}
+
+.App-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  background: white;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3 {
+  color: #20435c; /* darker blue */
+  margin-bottom: 1rem;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 2px solid #a3c9a8; /* soft green border */
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  width: 180px;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus {
+  border-color: #4caf50; /* bright green on focus */
+  box-shadow: 0 0 6px #a3c9a8aa;
+}
+
+button {
+  background: #4caf50;
+  border: none;
+  color: white;
+  padding: 10px 18px;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background: #388e3c;
+}
+
+.food-result {
+  margin-top: 10px;
+  border: 1.5px solid #a3c9a8;
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f2fbf2; /* very light green */
+}
+
+.dashboard-entry {
+  margin-bottom: 14px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #d0e6d7;
+}
+
+.progress-bar-container {
+  background: #cfe7cf;
+  border-radius: 12px;
+  width: 100%;
+  height: 22px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  background: #4caf50;
+  height: 100%;
+  border-radius: 12px 0 0 12px;
+  transition: width 0.6s ease;
+}
+
+.progress-bar-fill.overgoal {
+  background: #d32f2f; /* red if over goal */
+  border-radius: 12px;
+}
+
+label {
+  font-weight: 600;
+  margin-right: 6px;
+  color: #20435c;
+}
+
+@media (max-width: 480px) {
+  .App-container {
+    margin: 1rem;
+    padding: 1rem 1.5rem;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  input[type="date"] {
+    width: 100%;
+    margin-top: 6px;
+  }
+
+  button {
+    margin-left: 0;
+    margin-top: 8px;
+    width: 100%;
+  }
+
+  .food-result {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Tabs navigation */
+.tab-nav {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.tab-button {
+  background: #a3c9a8; /* soft green */
+  border: none;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #20435c;
+  transition: background-color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.tab-button:hover {
+  background: #88b97a;
+}
+
+.tab-button.active {
+  background: #4caf50;
+  color: white;
+  box-shadow: 0 0 6px #4caf50aa;
+}
+
+/* Input row layout */
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Light mode default */
+body {
+  background-color: #ffffff;
+  color: #000000;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode when class is applied to <body> */
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* Optional: make buttons and inputs look better in dark mode */
+body.dark-mode button,
+body.dark-mode input,
+body.dark-mode textarea {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #555;
+}
