@@ -18,7 +18,7 @@ app = FastAPI()
 
 origins = [
     "http://localhost:3000",  # for local testing
-    "https://lifehub-backend-xiny.onrender.com/",  # Replace with Render frontend URL once deployed
+    "https://lifehub-frontend.onrender.com",  # Replace with Render frontend URL once deployed
 ]
 
 app.add_middleware(

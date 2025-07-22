@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
 //const API_BASE = "http://localhost:8000";
-const API_BASE = "https://lifehub-frontend.onrender.com"
+const API_BASE = "https://lifehub-backend-xiny.onrender.com";
+
 
 
 const MEAL_TYPES = ["Breakfast", "Lunch", "Dinner", "Snack"];
