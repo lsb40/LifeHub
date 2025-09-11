@@ -6,24 +6,20 @@ import os
 load_dotenv()
 
 
+
 app = FastAPI()
 
-#Allow CORS for frontend localhost:3000
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["http://localhost:3000"],  # Add your frontend local URL here
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
 
 origins = [
     "http://localhost:3000",  # for local testing
+    "http://127.0.0.1:3000",  # alternative localhost
     "https://lifehub-frontend.onrender.com",  # Replace with Render frontend URL once deployed
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
