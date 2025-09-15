@@ -1,0 +1,369 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User Management
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  firstName String?
+  lastName  String?
+  avatar    String?
+  role      UserRole @default(USER)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Profile Information
+  dateOfBirth DateTime?
+  gender      Gender?
+  height      Float? // in cm
+  weight      Float? // in kg
+  activityLevel ActivityLevel?
+
+  // Goals
+  goals Goal[]
+
+  // Logs
+  nutritionLogs NutritionLog[]
+  waterLogs     WaterLog[]
+  moodLogs      MoodLog[]
+  stepLogs      StepLog[]
+  exerciseLogs  ExerciseLog[]
+
+  // Wearable Integration
+  wearableConnections WearableConnection[]
+
+  // Data Export/Privacy
+  dataExports DataExport[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+  PREFER_NOT_TO_SAY
+}
+
+enum ActivityLevel {
+  SEDENTARY
+  LIGHTLY_ACTIVE
+  MODERATELY_ACTIVE
+  VERY_ACTIVE
+  EXTRA_ACTIVE
+}
+
+// Food Database
+model Food {
+  id          String  @id @default(cuid())
+  name        String
+  brand       String?
+  barcode     String? @unique
+  description String?
+  
+  // Nutritional Information (per 100g)
+  calories      Float
+  protein       Float
+  carbohydrates Float
+  fat           Float
+  fiber         Float?
+  sugar         Float?
+  sodium        Float?
+  cholesterol   Float?
+  
+  // Micronutrients
+  vitaminA      Float?
+  vitaminC      Float?
+  vitaminD      Float?
+  vitaminE      Float?
+  vitaminK      Float?
+  thiamine      Float?
+  riboflavin    Float?
+  niacin        Float?
+  vitaminB6     Float?
+  folate        Float?
+  vitaminB12    Float?
+  biotin        Float?
+  pantothenicAcid Float?
+  choline       Float?
+  calcium       Float?
+  iron          Float?
+  magnesium     Float?
+  phosphorus    Float?
+  potassium     Float?
+  zinc          Float?
+  copper        Float?
+  manganese     Float?
+  selenium      Float?
+  
+  // Food Properties
+  servingSize    Float? // in grams
+  servingUnit    String?
+  category       String?
+  isVerified     Boolean @default(false)
+  source         String? // USDA, Edamam, User-added
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  nutritionLogs NutritionLog[]
+
+  @@map("foods")
+}
+
+// User Goals
+model Goal {
+  id          String   @id @default(cuid())
+  userId      String
+  type        GoalType
+  target      Float
+  unit        String
+  startDate   DateTime
+  endDate     DateTime?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("goals")
+}
+
+enum GoalType {
+  CALORIES
+  PROTEIN
+  CARBOHYDRATES
+  FAT
+  WATER
+  STEPS
+  EXERCISE_MINUTES
+  WEIGHT_LOSS
+  WEIGHT_GAIN
+}
+
+// Nutrition Logging
+model NutritionLog {
+  id        String   @id @default(cuid())
+  userId    String
+  foodId    String
+  quantity  Float    // in grams or servings
+  mealType  MealType
+  loggedAt  DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  food Food @relation(fields: [foodId], references: [id])
+
+  @@map("nutrition_logs")
+}
+
+enum MealType {
+  BREAKFAST
+  LUNCH
+  DINNER
+  SNACK
+  OTHER
+}
+
+// Water Intake Logging
+model WaterLog {
+  id        String   @id @default(cuid())
+  userId    String
+  amount    Float    // in ml
+  loggedAt  DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("water_logs")
+}
+
+// Mood Tracking
+model MoodLog {
+  id          String   @id @default(cuid())
+  userId      String
+  mood        MoodType
+  energy      Int      // 1-10 scale
+  stress      Int      // 1-10 scale
+  sleep       Int      // 1-10 scale
+  notes       String?
+  loggedAt    DateTime @default(now())
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("mood_logs")
+}
+
+enum MoodType {
+  VERY_HAPPY
+  HAPPY
+  NEUTRAL
+  SAD
+  VERY_SAD
+  ANXIOUS
+  STRESSED
+  EXCITED
+  TIRED
+  ENERGETIC
+}
+
+// Step Tracking
+model StepLog {
+  id        String   @id @default(cuid())
+  userId    String
+  steps     Int
+  distance  Float?   // in km
+  calories  Float?   // estimated
+  loggedAt  DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("step_logs")
+}
+
+// Exercise Logging
+model ExerciseLog {
+  id          String      @id @default(cuid())
+  userId      String
+  name        String
+  type        ExerciseType
+  duration    Int         // in minutes
+  calories    Float?      // estimated
+  intensity   Intensity?
+  notes       String?
+  loggedAt    DateTime    @default(now())
+  createdAt   DateTime    @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("exercise_logs")
+}
+
+enum ExerciseType {
+  CARDIO
+  STRENGTH
+  FLEXIBILITY
+  SPORTS
+  WALKING
+  RUNNING
+  CYCLING
+  SWIMMING
+  YOGA
+  PILATES
+  OTHER
+}
+
+enum Intensity {
+  LOW
+  MODERATE
+  HIGH
+  VERY_HIGH
+}
+
+// Wearable Device Integration
+model WearableConnection {
+  id          String   @id @default(cuid())
+  userId      String
+  provider    WearableProvider
+  accessToken String
+  refreshToken String?
+  expiresAt   DateTime?
+  isActive    Boolean  @default(true)
+  lastSyncAt  DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("wearable_connections")
+}
+
+enum WearableProvider {
+  APPLE_HEALTH
+  GOOGLE_FIT
+  FITBIT
+  GARMIN
+  SAMSUNG_HEALTH
+}
+
+// Data Export for Privacy Compliance
+model DataExport {
+  id        String      @id @default(cuid())
+  userId    String
+  type      ExportType
+  status    ExportStatus @default(PENDING)
+  filePath  String?
+  expiresAt DateTime?
+  createdAt DateTime    @default(now())
+  completedAt DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("data_exports")
+}
+
+enum ExportType {
+  FULL_DATA
+  NUTRITION_ONLY
+  FITNESS_ONLY
+  MOOD_ONLY
+}
+
+enum ExportStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  EXPIRED
+}
+
+// System Analytics
+model SystemMetrics {
+  id                String   @id @default(cuid())
+  totalUsers        Int
+  activeUsers       Int
+  totalLogs         Int
+  averageMood       Float?
+  totalCalories     Float?
+  totalSteps        BigInt?
+  systemUptime      Float?
+  errorRate         Float?
+  responseTime      Float?
+  recordedAt        DateTime @default(now())
+
+  @@map("system_metrics")
+}
+
+// API Rate Limiting
+model RateLimit {
+  id        String   @id @default(cuid())
+  ip        String
+  endpoint  String
+  count     Int      @default(1)
+  windowStart DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  @@unique([ip, endpoint, windowStart])
+  @@map("rate_limits")
+}

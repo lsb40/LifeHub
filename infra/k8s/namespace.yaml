@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: lifehub
+  labels:
+    name: lifehub
+    app: lifehub
