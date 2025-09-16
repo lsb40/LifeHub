@@ -1,210 +1,164 @@
-# LifeHub - Comprehensive Health & Wellness Tracking Platform
+# LifeHub - Health & Wellness Tracking Platform
 
-A modern, full-stack application for tracking nutrition, fitness, mood, and wellness metrics with advanced analytics and goal management.
+A full-stack web application for comprehensive health and wellness tracking, featuring nutrition logging, fitness monitoring, mood tracking, and analytics dashboard.
 
-## 🚀 Features
+## Features
 
-### Core Features
-- **Food Search & Nutrition Tracking**: Search foods via external APIs, log meals with automatic macro/micronutrient calculation
-- **Comprehensive Logging**: Track water intake, steps, mood, and exercise sessions
-- **Analytics Dashboard**: Daily progress tracking with calories in/out, hydration, steps, and mood trends
-- **Goal Management**: Set and track progress toward daily/weekly goals
-- **Data Export**: Export all data in CSV/JSON formats
-- **User Management**: Signup/login with role-based access (user/admin)
-- **Admin Panel**: System metrics and user activity monitoring
+### Core Functionality
+- **Nutrition Tracking**: Food logging with calorie and macro tracking
+- **Water Intake Monitoring**: Daily hydration tracking with visual progress
+- **Exercise Logging**: Workout sessions with duration and calorie burn tracking
+- **Mood Tracking**: Daily mood logging with notes and trend analysis
+- **Analytics Dashboard**: Comprehensive charts and data visualization
+- **User Authentication**: Secure login and registration system
+- **Data Persistence**: Local storage with user-specific data isolation
 
-### Stretch Features (Recruiter Impressive)
-- **Wearable Integration**: Real-time sync with Apple Health/Google Fit (stub implementation)
-- **AI-Powered Features**: Mood sentiment analysis and meal recommendations (ML stubs)
-- **Data Privacy**: GDPR-compliant data controls and account deletion
-- **Observability**: Metrics endpoints, structured logging, error tracking
-- **Modern UX**: Responsive design, dark mode, smooth animations
-- **Production Ready**: CI/CD pipeline, testing framework, deployment automation
+### Technical Features
+- **Responsive Design**: Mobile-first approach with modern UI
+- **Real-time Updates**: Dynamic data visualization and dashboard updates
+- **Data Export**: User data management and export capabilities
+- **Security**: Password hashing and secure authentication
+- **Cross-platform**: Works on desktop and mobile browsers
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 LifeHub/
+├── frontend/         # HTML/CSS/JavaScript application
 ├── backend/          # Node.js/Express API server
-├── frontend/         # React TypeScript application
-├── infra/           # Infrastructure as Code (Docker, K8s)
-├── docs/            # API documentation and guides
-├── tests/           # End-to-end and integration tests
-└── scripts/         # Development and deployment scripts
+├── vercel.json       # Deployment configuration
+└── README.md         # Project documentation
 ```
 
-## 🛠️ Tech Stack
-
-### Backend
-- **Runtime**: Node.js 18+
-- **Framework**: Express.js with TypeScript
-- **Database**: PostgreSQL with Prisma ORM
-- **Authentication**: JWT with bcrypt
-- **API**: RESTful with OpenAPI documentation
-- **Testing**: Jest + Supertest
+## Technology Stack
 
 ### Frontend
-- **Framework**: React 18 with TypeScript
-- **State Management**: Zustand + React Query
-- **UI Library**: Tailwind CSS + Headless UI
-- **Charts**: Recharts for analytics
-- **Testing**: Vitest + React Testing Library
+- **HTML5**: Semantic markup and structure
+- **CSS3**: Modern styling with Tailwind CSS framework
+- **JavaScript**: Vanilla JS with ES6+ features
+- **Canvas API**: Custom chart rendering for analytics
+- **Local Storage**: Client-side data persistence
 
-### Infrastructure
-- **Containerization**: Docker + Docker Compose
-- **Orchestration**: Kubernetes manifests
-- **CI/CD**: GitHub Actions
-- **Monitoring**: Prometheus + Grafana stubs
+### Backend
+- **Node.js**: JavaScript runtime environment
+- **Express.js**: Web application framework
+- **CORS**: Cross-origin resource sharing
+- **Crypto**: Password hashing and security
+- **RESTful API**: Standard HTTP endpoints
 
-## 🚀 Quick Start
+### Deployment
+- **Vercel**: Static site hosting and deployment
+- **GitHub**: Version control and CI/CD
+- **Docker**: Containerization support
+
+## Quick Start
 
 ### Prerequisites
 - Node.js 18+
-- Docker & Docker Compose
-- PostgreSQL 14+ (or use Docker)
+- Modern web browser
+- Git
 
-### 1. Clone and Setup
+### Local Development
+
+1. **Clone the repository**
 ```bash
-git clone <repository-url>
+git clone https://github.com/lsb40/LifeHub.git
 cd LifeHub
-npm run setup
 ```
 
-### 2. Environment Configuration
-```bash
-cp backend/.env.example backend/.env
-cp frontend/.env.example frontend/.env
-# Edit the .env files with your configuration
-```
-
-### 3. Start Development Environment
-```bash
-# Start all services with Docker Compose
-docker-compose up -d
-
-# Or run locally
-npm run dev
-```
-
-### 4. Access the Application
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:8000
-- **API Docs**: http://localhost:8000/docs
-- **Admin Panel**: http://localhost:3000/admin
-
-## 📊 Demo Data
-
-The application comes with seed data for immediate testing:
-- Sample users (user@demo.com, admin@demo.com)
-- Food database with 1000+ items
-- Mock nutrition logs and analytics data
-
-## 🧪 Testing
-
-```bash
-# Run all tests
-npm test
-
-# Backend tests only
-npm run test:backend
-
-# Frontend tests only
-npm run test:frontend
-
-# E2E tests
-npm run test:e2e
-```
-
-## 🚀 Deployment
-
-### Development
-```bash
-npm run dev
-```
-
-### Production
-```bash
-# Build and deploy with Docker
-docker-compose -f docker-compose.prod.yml up -d
-
-# Or deploy to Kubernetes
-kubectl apply -f infra/k8s/
-```
-
-## 📈 API Documentation
-
-- **Swagger UI**: http://localhost:8000/docs
-- **OpenAPI Spec**: `/docs/api-spec.yaml`
-
-## 🔧 Development
-
-### Backend Development
+2. **Start the backend server**
 ```bash
 cd backend
 npm install
-npm run dev
+node simple-server.js
 ```
 
-### Frontend Development
+3. **Start the frontend server**
 ```bash
 cd frontend
-npm install
-npm run dev
+python3 -m http.server 3001
 ```
 
-### Database Management
-```bash
-# Run migrations
-npm run db:migrate
+4. **Access the application**
+- Frontend: http://localhost:3001
+- Backend API: http://localhost:8000
 
-# Seed database
-npm run db:seed
+### Production Deployment
 
-# Reset database
-npm run db:reset
-```
+The application is deployed on Vercel and accessible at:
+- **Live Demo**: [Vercel Deployment URL]
 
-## 🎯 Roadmap
+## API Endpoints
 
-### Phase 1: Core Features ✅
-- [x] User authentication and authorization
-- [x] Food search and nutrition tracking
-- [x] Meal logging with macro calculation
-- [x] Dashboard with analytics
-- [x] Goal setting and tracking
+### Authentication
+- `POST /api/v1/auth/register` - User registration
+- `POST /api/v1/auth/login` - User login
 
-### Phase 2: Advanced Features 🚧
-- [ ] Wearable device integration (Apple Health, Google Fit)
-- [ ] AI-powered meal recommendations
-- [ ] Mood sentiment analysis
-- [ ] Push notifications
-- [ ] Social features and challenges
+### Data Management
+- `POST /api/v1/nutrition/log` - Log nutrition data
+- `POST /api/v1/water/log` - Log water intake
+- `POST /api/v1/exercise/log` - Log exercise data
+- `POST /api/v1/mood/log` - Log mood data
 
-### Phase 3: Enterprise Features 📋
-- [ ] Multi-tenant support
-- [ ] Advanced analytics and reporting
-- [ ] Integration with healthcare systems
-- [ ] Mobile applications (iOS/Android)
-- [ ] White-label solutions
+### Health Check
+- `GET /api/v1/health` - API health status
 
-## 🤝 Contributing
+## Development
+
+### Project Structure
+- **Frontend**: Single-page application with modular JavaScript
+- **Backend**: RESTful API with middleware and error handling
+- **Data Flow**: Client-side storage with API synchronization
+- **Security**: Password hashing and input validation
+
+### Key Components
+- **Authentication System**: JWT-based user management
+- **Data Models**: Structured data handling for all health metrics
+- **Chart Generation**: Custom canvas-based analytics visualization
+- **Responsive UI**: Mobile-optimized interface design
+
+## Testing
+
+The application includes:
+- **Manual Testing**: Comprehensive user flow testing
+- **Cross-browser Compatibility**: Chrome, Firefox, Safari, Edge
+- **Mobile Responsiveness**: iOS and Android browser testing
+- **Data Validation**: Input sanitization and error handling
+
+## Security
+
+- **Password Hashing**: SHA-256 encryption for user passwords
+- **Input Validation**: Client and server-side data validation
+- **CORS Configuration**: Secure cross-origin requests
+- **Data Isolation**: User-specific data storage and access
+
+## Performance
+
+- **Optimized Loading**: Minimal dependencies and efficient code
+- **Responsive Design**: Fast rendering across all devices
+- **Data Caching**: Local storage for improved performance
+- **Chart Rendering**: Efficient canvas-based data visualization
+
+## Future Enhancements
+
+- **Database Integration**: PostgreSQL for production data storage
+- **Real-time Sync**: Cloud-based data synchronization
+- **Mobile App**: Native iOS and Android applications
+- **Advanced Analytics**: Machine learning insights and recommendations
+- **Social Features**: Community challenges and sharing
+
+## Contributing
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
+2. Create a feature branch (`git checkout -b feature/new-feature`)
+3. Commit your changes (`git commit -m 'Add new feature'`)
+4. Push to the branch (`git push origin feature/new-feature`)
 5. Open a Pull Request
 
-## 📄 License
+## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Nutrition data provided by USDA FoodData Central
-- Icons by Heroicons
-- UI components inspired by Tailwind UI
+This project is licensed under the MIT License.
 
 ---
 
-**Built with ❤️ for health and wellness tracking**
+**LifeHub** - Comprehensive health and wellness tracking for modern lifestyles.
