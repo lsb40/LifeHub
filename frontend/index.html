@@ -1740,15 +1740,7 @@
                 return;
             }
             
-            const today = new Date().toDateString();
-            const todayEntries = entries.filter(entry => new Date(entry.timestamp).toDateString() === today);
-            
-            if (todayEntries.length === 0) {
-                container.innerHTML = '<p style="color: #6c757d; text-align: center; margin: 20px 0;">No entries today. Add your first meal!</p>';
-                return;
-            }
-            
-            container.innerHTML = todayEntries.map(entry => `
+            container.innerHTML = entries.map(entry => `
                 <div style="background: rgba(40, 167, 69, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #28a745;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
@@ -1774,18 +1766,17 @@
                 return;
             }
             
-            const today = new Date().toDateString();
-            const todayEntries = entries.filter(entry => new Date(entry.timestamp).toDateString() === today);
-            const total = todayEntries.reduce((sum, entry) => sum + entry.amount, 0);
+            // Calculate total for all entries
+            const total = entries.reduce((sum, entry) => sum + entry.amount, 0);
             
             totalContainer.textContent = total;
             
-            if (todayEntries.length === 0) {
+            if (entries.length === 0) {
                 container.innerHTML = '<p style="color: #6c757d; text-align: center; margin: 20px 0;">No water logged yet. Stay hydrated!</p>';
                 return;
             }
             
-            container.innerHTML = todayEntries.map(entry => `
+            container.innerHTML = entries.map(entry => `
                 <div style="background: rgba(0, 123, 255, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #007bff;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div style="font-weight: bold; color: #0d3d0d;">${entry.amount}ml</div>
