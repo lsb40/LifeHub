@@ -1725,8 +1725,13 @@
         
         // Data loading functions
         function loadNutritionData(entries) {
+            console.log('Loading nutrition data:', entries);
             const container = document.getElementById('nutritionEntries');
-            if (!container) return;
+            console.log('Nutrition container found:', container);
+            if (!container) {
+                console.error('Nutrition container not found!');
+                return;
+            }
             
             if (entries.length === 0) {
                 container.innerHTML = '<p style="color: #6c757d; text-align: center; margin: 20px 0;">No entries yet. Add your first meal!</p>';
@@ -1758,9 +1763,14 @@
         }
         
         function loadWaterData(entries) {
+            console.log('Loading water data:', entries);
             const container = document.getElementById('waterEntries');
             const totalContainer = document.getElementById('totalWater');
-            if (!container || !totalContainer) return;
+            console.log('Container found:', container, 'Total container found:', totalContainer);
+            if (!container || !totalContainer) {
+                console.error('Water containers not found!');
+                return;
+            }
             
             const today = new Date().toDateString();
             const todayEntries = entries.filter(entry => new Date(entry.timestamp).toDateString() === today);
