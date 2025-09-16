@@ -1452,7 +1452,6 @@
         function addNutritionEntry(event) {
             event.preventDefault();
             console.log('Adding nutrition entry...');
-            alert('Nutrition function called!'); // Temporary test
             
             const foodNameEl = document.getElementById('foodName');
             const caloriesEl = document.getElementById('calories');
@@ -1495,13 +1494,15 @@
             document.getElementById('calories').value = '';
             document.getElementById('quantity').value = '';
             
+            // Show success message
+            alert('✅ Food entry added successfully!');
+            
             // Update dashboard summary
             updateDashboardSummary();
         }
         
         function addWater(amount) {
             console.log('Adding water entry:', amount);
-            alert('Water function called with: ' + amount + 'ml'); // Temporary test
             const waterDateInput = document.getElementById('waterDate');
             
             if (!waterDateInput) {
@@ -1528,6 +1529,9 @@
             saveData('water', userData.water);
             
             loadWaterData(userData.water);
+            
+            // Show success message
+            alert('✅ Water entry added successfully!');
             
             // Update dashboard summary
             updateDashboardSummary();
