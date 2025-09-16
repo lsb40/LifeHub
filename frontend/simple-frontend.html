@@ -1495,7 +1495,7 @@
             document.getElementById('quantity').value = '';
             
             // Show success message
-            alert('✅ Food entry added successfully!');
+            console.log('✅ Food entry added successfully!');
             console.log('Nutrition data saved:', userData.nutrition);
             
             // Update dashboard summary
@@ -1532,7 +1532,7 @@
             loadWaterData(userData.water);
             
             // Show success message
-            alert('✅ Water entry added successfully!');
+            console.log('✅ Water entry added successfully!');
             console.log('Water data saved:', userData.water);
             
             // Update dashboard summary
@@ -1573,6 +1573,10 @@
             document.getElementById('exerciseType').value = '';
             document.getElementById('duration').value = '';
             document.getElementById('caloriesBurned').value = '';
+            
+            // Show success message
+            console.log('✅ Exercise entry added successfully!');
+            console.log('Exercise data saved:', userData.exercise);
             
             // Update dashboard summary
             updateDashboardSummary();
@@ -1615,6 +1619,10 @@
             loadMoodData(userData.mood);
             document.getElementById('selectedMood').value = '';
             document.getElementById('moodNotes').value = '';
+            
+            // Show success message
+            console.log('✅ Mood entry added successfully!');
+            console.log('Mood data saved:', userData.mood);
             
             // Update dashboard summary
             updateDashboardSummary();
@@ -1790,15 +1798,12 @@
             const container = document.getElementById('exerciseEntries');
             if (!container) return;
             
-            const today = new Date().toDateString();
-            const todayEntries = entries.filter(entry => new Date(entry.timestamp).toDateString() === today);
-            
-            if (todayEntries.length === 0) {
+            if (entries.length === 0) {
                 container.innerHTML = '<p style="color: #6c757d; text-align: center; margin: 20px 0;">No workouts logged yet. Get moving!</p>';
                 return;
             }
             
-            container.innerHTML = todayEntries.map(entry => `
+            container.innerHTML = entries.map(entry => `
                 <div style="background: rgba(253, 126, 20, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #fd7e14;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
@@ -1818,15 +1823,12 @@
             const container = document.getElementById('moodEntries');
             if (!container) return;
             
-            const today = new Date().toDateString();
-            const todayEntries = entries.filter(entry => new Date(entry.timestamp).toDateString() === today);
-            
-            if (todayEntries.length === 0) {
+            if (entries.length === 0) {
                 container.innerHTML = '<p style="color: #6c757d; text-align: center; margin: 20px 0;">No mood entries yet. Check in with yourself!</p>';
                 return;
             }
             
-            container.innerHTML = todayEntries.map(entry => `
+            container.innerHTML = entries.map(entry => `
                 <div style="background: rgba(111, 66, 193, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #6f42c1;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                         <div style="font-size: 24px;">${entry.mood}</div>
