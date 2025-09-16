@@ -1201,29 +1201,21 @@
             const userData = JSON.parse(localStorage.getItem(`lifehub_data_${userId}`) || '{}');
             const today = new Date().toDateString();
             
-            // Calculate today's totals
-            const todayNutrition = (userData.nutrition || []).filter(entry => 
-                new Date(entry.timestamp).toDateString() === today
-            );
-            const todayWater = (userData.water || []).filter(entry => 
-                new Date(entry.timestamp).toDateString() === today
-            );
-            const todayExercise = (userData.exercise || []).filter(entry => 
-                new Date(entry.timestamp).toDateString() === today
-            );
-            const todayMood = (userData.mood || []).filter(entry => 
-                new Date(entry.timestamp).toDateString() === today
-            );
+            // Calculate totals for all entries (not just today)
+            const allNutrition = userData.nutrition || [];
+            const allWater = userData.water || [];
+            const allExercise = userData.exercise || [];
+            const allMood = userData.mood || [];
             
             // Calculate totals
-            const totalCalories = todayNutrition.reduce((sum, entry) => sum + (entry.calories || 0), 0);
-            const totalWater = todayWater.reduce((sum, entry) => sum + (entry.amount || 0), 0);
-            const totalExercise = todayExercise.reduce((sum, entry) => sum + (entry.duration || 0), 0);
+            const totalCalories = allNutrition.reduce((sum, entry) => sum + (entry.calories || 0), 0);
+            const totalWater = allWater.reduce((sum, entry) => sum + (entry.amount || 0), 0);
+            const totalExercise = allExercise.reduce((sum, entry) => sum + (entry.duration || 0), 0);
             
             // Calculate average mood
             let averageMood = '😊';
-            if (todayMood.length > 0) {
-                const moodValues = todayMood.map(entry => {
+            if (allMood.length > 0) {
+                const moodValues = allMood.map(entry => {
                     switch(entry.mood) {
                         case '😢': return 1;
                         case '😐': return 2;
@@ -1243,24 +1235,16 @@
             }
             
             // Calculate sleep data
-            const todaySleep = (userData.sleep || []).filter(entry => 
-                new Date(entry.timestamp).toDateString() === today
-            );
-            const totalSleep = todaySleep.reduce((sum, entry) => sum + (entry.duration || 0), 0);
+            const allSleep = userData.sleep || [];
+            const totalSleep = allSleep.reduce((sum, entry) => sum + (entry.duration || 0), 0);
             
             // Calculate habits data
             const habits = userData.habits || [];
-            const completedHabits = habits.filter(habit => 
-                habit.completions.some(completion => 
-                    new Date(completion.date).toDateString() === today
-                )
-            ).length;
+            const completedHabits = habits.length; // Show total habits instead of just today's
             
             // Calculate medical data
-            const todayMedical = (userData.medical || []).filter(entry => 
-                new Date(entry.timestamp).toDateString() === today
-            );
-            const totalMedical = todayMedical.length;
+            const allMedical = userData.medical || [];
+            const totalMedical = allMedical.length;
             
             // Update dashboard elements
             const caloriesEl = document.getElementById('dashboardCalories');
