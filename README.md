@@ -83,10 +83,10 @@ python3 -m http.server 3001
 - Frontend: http://localhost:3001
 - Backend API: http://localhost:8000
 
-### Production Deployment
+## Live Demo
 
-The application is deployed on Vercel and accessible at:
-- **Live Demo**: https://lifehub-three.vercel.app/
+You can try the deployed version of LifeHub here:
+👉 https://lifehub-three.vercel.app/
 
 ## API Endpoints
 
