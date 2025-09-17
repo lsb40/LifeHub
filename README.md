@@ -2,6 +2,11 @@
 
 A full-stack web application for comprehensive health and wellness tracking, featuring nutrition logging, fitness monitoring, mood tracking, and analytics dashboard.
 
+## Live Demo
+
+You can try the deployed version of LifeHub here:
+👉 https://lifehub-three.vercel.app/
+
 ## Features
 
 ### Core Functionality
@@ -82,11 +87,6 @@ python3 -m http.server 3001
 4. **Access the application**
 - Frontend: http://localhost:3001
 - Backend API: http://localhost:8000
-
-## Live Demo
-
-You can try the deployed version of LifeHub here:
-👉 https://lifehub-three.vercel.app/
 
 ## API Endpoints
 
