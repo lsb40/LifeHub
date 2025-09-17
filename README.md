@@ -86,7 +86,7 @@ python3 -m http.server 3001
 ### Production Deployment
 
 The application is deployed on Vercel and accessible at:
-- **Live Demo**: [Vercel Deployment URL]
+- **Live Demo**: https://lifehub-three.vercel.app/
 
 ## API Endpoints
 
